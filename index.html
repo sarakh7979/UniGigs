@@ -3,28 +3,32 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>UniGigs — Student Micro‑Gigs (UAE) — Fixed Profile & Verified</title>
+<title>UniGigs — Apply Fix & Improved Apply Button</title>
 <style>
 :root{
   --bg:#020617; --muted:#9ca3af; --text:#f8fafc;
   --accent1:#f97316; --accent2:#ec4899; --accent3:#38bdf8; --accent4:#22c55e;
-  --glass: rgba(255,255,255,0.02); --radius-lg:18px; --shadow: 0 8px 20px rgba(2,6,23,0.55);
+  --glass: rgba(255,255,255,0.02); --radius-lg:14px; --shadow: 0 10px 30px rgba(2,6,23,0.55);
   --phone-width:380px; --phone-height:720px;
 }
 *{box-sizing:border-box;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial;}
 html,body{height:100%;margin:0;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;}
 .app{min-height:100vh;display:flex;flex-direction:column}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:14px 6vw;border-bottom:1px solid rgba(148,163,184,0.04);backdrop-filter:blur(6px);position:sticky;top:0;background:linear-gradient(90deg, rgba(6,10,20,0.85), rgba(6,10,20,0.5));z-index:40}
+
+/* layout */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:14px 6vw;border-bottom:1px solid rgba(148,163,184,0.04);position:sticky;top:0;background:linear-gradient(90deg, rgba(6,10,20,0.85), rgba(6,10,20,0.5));z-index:40}
 .brand{display:flex;gap:12px;align-items:center}
 .logo{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--accent1),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:800;color:#071028}
 .container{display:grid;grid-template-columns:1fr 1.05fr 0.95fr;gap:22px;padding:28px 6vw 48px;align-items:start}
+@media (max-width:1100px){.container{grid-template-columns:1fr;padding:18px;gap:14px}}
+
+/* left */
 .left{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));border-radius:var(--radius-lg);padding:18px;border:1px solid rgba(148,163,184,0.04);box-shadow:var(--shadow)}
-.cta-row{display:flex;gap:12px;margin-top:12px;align-items:center}
-.cta-btn{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:14px;border:none;cursor:pointer;font-weight:700;color:#071028;background:linear-gradient(90deg,var(--accent1),var(--accent2));box-shadow:0 10px 30px rgba(236,72,153,0.12)}
-.cta-btn.secondary{background:linear-gradient(90deg,#60a5fa,#7c3aed);color:#fff}
-.search-card{margin-top:14px;background:rgba(2,6,23,0.6);padding:12px;border-radius:14px;border:1px solid rgba(148,163,184,0.04)}
-.search{flex:1;display:flex;gap:8px;align-items:center;padding:10px;border-radius:12px;background:rgba(2,6,23,0.45);border:1px solid rgba(148,163,184,0.04)}
-.btn-search{padding:10px 14px;border-radius:12px;border:none;background:linear-gradient(90deg,var(--accent2),var(--accent3));color:#071028;font-weight:800;cursor:pointer;box-shadow:0 8px 20px rgba(56,189,248,0.06)}
+.chip{padding:6px 10px;border-radius:999px;background:var(--glass);color:var(--muted);font-size:13px;border:1px solid rgba(148,163,184,0.04)}
+.h1{font-size:26px;font-weight:800;margin:6px 0}
+.lead{color:var(--muted);line-height:1.5;max-width:520px;margin-bottom:12px}
+
+/* phone mock */
 .phone-shell{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));border-radius:20px;padding:18px;border:1px solid rgba(148,163,184,0.06);box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center}
 .phone{width:var(--phone-width);height:var(--phone-height);border-radius:36px;background:linear-gradient(180deg,#020617,#000);border:1px solid rgba(148,163,184,0.06);box-shadow:0 20px 40px rgba(2,6,23,0.6);padding:12px;position:relative;overflow:hidden}
 .phone-inner{margin-top:36px;height:calc(100% - 44px);display:flex;flex-direction:column;gap:10px}
@@ -32,22 +36,44 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--text);-webkit-fo
 .phone-tab{flex:1;border-radius:999px;padding:8px 10px;font-size:13px;text-align:center;color:var(--muted);cursor:pointer;border:1px solid transparent}
 .phone-tab.active{background:linear-gradient(90deg, rgba(236,72,153,0.12), rgba(56,189,248,0.06));color:#f9fafb;border-color:rgba(236,72,153,0.18)}
 .phone-list{flex:1;padding:8px 10px 12px;overflow:auto}
+
+/* gig card */
 .gig{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));border-radius:12px;padding:12px;border:1px solid rgba(148,163,184,0.06);margin-bottom:12px;font-size:14px;cursor:pointer;transition:transform .12s ease, box-shadow .12s ease}
 .gig:hover{transform:translateY(-6px);box-shadow:0 10px 24px rgba(2,6,23,0.35)}
+
+/* details */
 .details{display:none;flex-direction:column;height:100%}
 .details.active{display:flex}
 .details .header{display:flex;justify-content:space-between;align-items:center;padding:6px}
 .details .body{padding:8px;color:var(--muted);font-size:13px;overflow:auto}
-.details .title{font-size:16px;font-weight:800;color:#f9fafb;margin-bottom:6px}
-.card{background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border-radius:14px;padding:14px;border:1px solid rgba(148,163,184,0.04);box-shadow:0 10px 25px rgba(2,6,23,0.5)}
-.input, .textarea{background:rgba(2,6,23,0.6);border-radius:10px;border:1px solid rgba(148,163,184,0.04);padding:10px;color:var(--text);font-size:13px}
-.textarea{min-height:80px;resize:vertical}
-.post-button{padding:10px 14px;border-radius:12px;border:none;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#071028;font-weight:900;cursor:pointer;box-shadow:0 10px 30px rgba(236,72,153,0.12)}
-.avatar{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent1),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:800;color:#071028}
+.title-lg{font-size:16px;font-weight:800;color:#f9fafb;margin-bottom:6px}
+
+/* buttons */
+.btn-primary{
+  background:linear-gradient(90deg,var(--accent3),var(--accent4));
+  color:#071028;border:none;padding:10px 14px;border-radius:12px;font-weight:800;cursor:pointer;box-shadow:0 10px 30px rgba(56,189,248,0.08);
+}
+.btn-ghost{background:transparent;border:1px solid rgba(148,163,184,0.06);color:var(--muted);padding:8px 12px;border-radius:10px;cursor:pointer}
+.btn-apply{
+  background:linear-gradient(90deg,#ffb86b,#ff6bcb);
+  color:#071028;border:none;padding:10px 14px;border-radius:999px;font-weight:900;cursor:pointer;box-shadow:0 12px 30px rgba(255,107,203,0.12);
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+.btn-apply:active{transform:translateY(2px);box-shadow:0 8px 20px rgba(255,107,203,0.08)}
+.btn-disabled{opacity:0.5;cursor:not-allowed;pointer-events:none}
+
+/* modal */
+.modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.6);display:none;align-items:center;justify-content:center;z-index:80}
+.modal{width:92%;max-width:520px;background:#071028;border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.04);box-shadow:0 30px 60px rgba(2,6,23,0.7);color:var(--text)}
+.modal h3{margin:0 0 8px 0}
+.input, textarea{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(148,163,184,0.06);background:rgba(255,255,255,0.02);color:var(--text);font-size:14px}
+textarea{min-height:110px;resize:vertical;margin-top:8px}
+
+/* toast */
+.toast{position:fixed;bottom:18px;right:18px;background:#0f172a;border-radius:999px;padding:10px 14px;border:1px solid rgba(34,197,94,0.12);color:#bbf7d0;font-size:13px;display:none;align-items:center;gap:8px;box-shadow:0 12px 30px rgba(15,23,42,0.8);z-index:90}
+
+/* small */
 .kv{font-size:12px;color:var(--muted)}
-.toast{position:fixed;bottom:18px;right:18px;background:#0f172a;border-radius:999px;padding:10px 14px;border:1px solid rgba(34,197,94,0.12);color:#bbf7d0;font-size:13px;display:none;align-items:center;gap:8px;box-shadow:0 12px 30px rgba(15,23,42,0.8)}
-.toast-dot{width:8px;height:8px;border-radius:999px;background:var(--accent4)}
-@media (max-width:900px){ :root{--phone-width:320px;--phone-height:640px} .cta-btn{padding:8px 12px} }
 </style>
 </head>
 <body>
@@ -62,41 +88,19 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--text);-webkit-fo
     </div>
     <div style="display:flex;gap:10px;align-items:center">
       <div class="kv">All Emirates</div>
-      <button id="navPostBtn" class="post-button">Post a Gig</button>
+      <button id="navPostBtn" class="btn-primary">Post a Gig</button>
     </div>
   </header>
 
   <main class="container">
     <!-- LEFT -->
     <section class="left">
-      <div style="font-size:26px;font-weight:800">Flexible work for <span style="background:linear-gradient(90deg,var(--accent1),var(--accent2));-webkit-background-clip:text;color:transparent">real students</span>.</div>
-      <div style="color:var(--muted);margin-top:8px">UniGigs connects verified university students across all Emirates with families and small businesses for short-term, flexible tasks — from babysitting and tutoring to event help and errands.</div>
-
-      <div class="cta-row" style="margin-top:12px">
-        <button class="cta-btn" id="ctaStudent">I'm a student</button>
-        <button class="cta-btn secondary" id="ctaHelp">I need help at home</button>
-        <button class="cta-btn" id="ctaVerify" style="background:linear-gradient(90deg,#06b6d4,#14b8a6);color:#071028">Verified info</button>
-      </div>
-
-      <div style="margin-top:14px" class="card">
-        <div style="font-weight:800">Why students love UniGigs</div>
-        <ul style="color:var(--muted);margin-top:8px">
-          <li>Flexible 1–4 hour tasks that fit around classes.</li>
-          <li>Verified platform — safer than random social posts.</li>
-          <li>Build real-world skills and a rated profile for your CV.</li>
-          <li>Earn extra income without committing to full-time work.</li>
-        </ul>
-      </div>
-
-      <div style="margin-top:14px" class="search-card">
-        <div style="font-weight:800">Search jobs</div>
-        <div style="margin-top:8px;color:var(--muted);font-size:13px">Find specific roles and set the salary you want — press Search to update results.</div>
-
-        <div style="display:flex;gap:12px;margin-top:12px;align-items:center">
-          <div class="search"><input id="globalSearch" placeholder="Search (e.g., tutoring, JLT, babysitting)" /></div>
-          <select id="jobType" class="input"><option value="">Any job type</option><option>Tutoring</option><option>Babysitting</option><option>Event</option><option>Errand</option></select>
-          <button id="leftSearchBtn" class="btn-search">Search</button>
-        </div>
+      <div class="h1">Flexible work for <span style="background:linear-gradient(90deg,var(--accent1),var(--accent2));-webkit-background-clip:text;color:transparent">real students</span>.</div>
+      <div class="lead">UniGigs connects verified university students across all Emirates with families and small businesses for short-term, flexible tasks — from babysitting and tutoring to event help and errands.</div>
+      <div style="margin-top:12px;display:flex;gap:8px">
+        <button id="ctaStudent" class="chip">I'm a student</button>
+        <button id="ctaHelp" class="chip">I need help at home</button>
+        <button id="ctaVerify" class="chip">Verified info</button>
       </div>
     </section>
 
@@ -118,7 +122,7 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--text);-webkit-fo
                 <div style="flex:1;background:rgba(2,6,23,0.6);padding:10px;border-radius:12px;display:flex;align-items:center">
                   <input id="phoneSearch" placeholder="Search jobs or areas" style="background:transparent;border:0;color:var(--text);outline:none;width:100%" />
                 </div>
-                <button id="phoneSearchBtn" class="btn-search">Search</button>
+                <button id="phoneSearchBtn" class="btn-primary">Search</button>
               </div>
               <div id="phoneList" style="padding:8px 10px 14px;overflow:auto"></div>
             </div>
@@ -131,7 +135,7 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--text);-webkit-fo
               </div>
 
               <div class="body">
-                <div class="title" id="detailTitle">Job title</div>
+                <div class="title-lg" id="detailTitle">Job title</div>
                 <div style="display:flex;justify-content:space-between;margin-bottom:8px">
                   <div id="detailPay" class="kv">AED 0 · 1 hr</div>
                   <div id="detailArea" class="kv">Dubai</div>
@@ -153,8 +157,8 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--text);-webkit-fo
                     </div>
                   </div>
                   <div style="display:flex;gap:8px">
-                    <button id="viewProfileBtn" style="background:linear-gradient(135deg,var(--accent3),var(--accent4));border:none;padding:8px 10px;border-radius:10px;color:#071028;font-weight:700">View profile</button>
-                    <button id="applyNowBtn" style="background:transparent;border:1px solid rgba(148,163,184,0.06);padding:8px 10px;border-radius:10px;color:var(--muted)">Apply</button>
+                    <button id="viewProfileBtn" class="btn-ghost">View profile</button>
+                    <button id="applyNowBtn" class="btn-apply">Apply</button>
                   </div>
                 </div>
               </div>
@@ -181,8 +185,8 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--text);-webkit-fo
                 <div id="profileAbout" style="margin-top:10px;color:var(--muted)"></div>
 
                 <div style="display:flex;gap:8px;margin-top:12px">
-                  <button id="messageBtn" style="flex:1;border-radius:999px;border:none;padding:12px;background:linear-gradient(135deg,var(--accent3),var(--accent2));color:#071028;font-weight:700">Message</button>
-                  <button id="reviewsBtn" style="flex:1;border-radius:999px;border:1px solid rgba(148,163,184,0.06);padding:12px;background:transparent;color:var(--muted)">Reviews</button>
+                  <button id="messageBtn" class="btn-primary" style="flex:1">Message</button>
+                  <button id="reviewsBtn" class="btn-ghost" style="flex:1">Reviews</button>
                 </div>
               </div>
             </div>
@@ -210,7 +214,7 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--text);-webkit-fo
     </section>
 
     <!-- RIGHT (post form) -->
-    <aside class="right">
+    <aside style="display:flex;flex-direction:column;gap:14px">
       <div class="card" id="postCard">
         <div style="display:flex;justify-content:space-between;align-items:center">
           <div style="display:flex;gap:12px;align-items:center">
@@ -220,7 +224,7 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--text);-webkit-fo
               <div style="font-size:12px;color:var(--muted)">Families & businesses across all Emirates can post short tasks — students will apply.</div>
             </div>
           </div>
-          <div><button id="postGigBtn" class="post-button">Create post</button></div>
+          <div><button id="postGigBtn" class="btn-primary">Create post</button></div>
         </div>
 
         <div style="margin-top:12px;padding-top:8px;border-top:1px dashed rgba(148,163,184,0.03)">
@@ -237,8 +241,8 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--text);-webkit-fo
           <div style="margin-top:8px"><label class="kv">Preferred skills (optional)</label><input id="postSkills" class="input" placeholder="e.g., good with kids, fluent in English" /></div>
 
           <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:10px">
-            <button id="clearPostBtn" class="chip">Clear</button>
-            <button id="postSubmitBtn" class="chip">Post gig</button>
+            <button id="clearPostBtn" class="btn-ghost">Clear</button>
+            <button id="postSubmitBtn" class="btn-primary">Post gig</button>
           </div>
         </div>
       </div>
@@ -246,10 +250,24 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--text);-webkit-fo
   </main>
 </div>
 
-<div class="toast" id="toast"><div class="toast-dot"></div><div id="toastText">Action completed</div></div>
+<!-- Application modal -->
+<div id="modalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal" role="document" aria-labelledby="modalTitle">
+    <h3 id="modalTitle">Apply for this gig</h3>
+    <div style="color:var(--muted);margin-bottom:10px" id="modalJobSummary">Job summary</div>
+    <label class="kv">Short message to the poster</label>
+    <textarea id="applicationMessage" placeholder="Introduce yourself briefly and say why you're a good fit."></textarea>
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
+      <button id="modalCancel" class="btn-ghost">Cancel</button>
+      <button id="modalSubmit" class="btn-apply">Send application</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Action completed</div>
 
 <script>
-/* ---------- Data (expanded) ---------- */
+/* ---------- Data (expanded sample gigs) ---------- */
 const posters = [
   { id:'eleanora', name:'Eleanora Haddad', type:'Student', emirate:'Dubai', university:'Canadian University Dubai', major:'Cyber Security', verified:true, avatar:'EH', about:"Hi — I’m Eleanora, a Cyber Security student. I tutor and help with events." },
   { id:'leila', name:'Leila Nasser', type:'Family', emirate:'Dubai', verified:true, avatar:'LN', about:"Busy parent in Dubai. Prefers verified students for childcare and tutoring." },
@@ -289,29 +307,25 @@ const sampleGigs = {
 
 /* ---------- State ---------- */
 let currentJob = null;
-let savedSearches = JSON.parse(localStorage.getItem('ug_saved_searches') || '[]');
-const PAGE_SIZE = 6;
-let currentPage = 1;
-let lastRenderedList = [];
+let applications = {}; // store applications by job id to prevent duplicates
 
-/* ---------- Helpers ---------- */
-function toast(msg){ const t=document.getElementById('toast'); document.getElementById('toastText').textContent=msg; t.style.display='flex'; setTimeout(()=>t.style.display='none',2000); }
-function debounce(fn, wait=220){ let t; return function(...args){ clearTimeout(t); t = setTimeout(()=> fn.apply(this, args), wait); }; }
+/* ---------- Utilities ---------- */
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.display = 'flex';
+  clearTimeout(t._hide);
+  t._hide = setTimeout(()=> t.style.display = 'none', 2200);
+}
 
 /* ---------- Render list with pagination ---------- */
-function renderPhoneList(list, reset=true){
-  lastRenderedList = list || [];
-  if(reset) currentPage = 1;
-  const end = Math.min(currentPage * PAGE_SIZE, lastRenderedList.length);
-  const slice = lastRenderedList.slice(0, end);
+function renderPhoneList(list = sampleGigs.student, reset=true){
   const container = document.getElementById('phoneList');
   container.innerHTML = '';
-  const frag = document.createDocumentFragment();
-  slice.forEach(job=>{
+  list.forEach(job=>{
     const poster = posters.find(p=>p.id===job.posterId) || {name:'Unknown', avatar:'??', emirate: job.emirate || ''};
     const card = document.createElement('div');
     card.className = 'gig';
-    card.onclick = ()=> openDetails(job);
     card.innerHTML = `
       <div style="display:flex;justify-content:space-between;align-items:flex-start">
         <div>
@@ -325,47 +339,49 @@ function renderPhoneList(list, reset=true){
       </div>
       <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px">
         <div style="color:var(--muted);font-size:12px">${job.time} · ${job.area}</div>
-        <div><button style="border-radius:999px;border:none;padding:8px 12px;background:linear-gradient(135deg,var(--accent3),var(--accent4));color:#071028;font-weight:700" onclick="event.stopPropagation(); openDetails(${job.id})">View details</button></div>
+        <div style="display:flex;gap:8px">
+          <button class="btn-ghost" data-id="${job.id}" data-action="details">Details</button>
+          <button class="btn-apply" data-id="${job.id}" data-action="quickApply">Apply</button>
+        </div>
       </div>
     `;
-    frag.appendChild(card);
+    // click on card opens details
+    card.addEventListener('click', (e)=>{
+      if(e.target && (e.target.dataset && (e.target.dataset.action === 'details' || e.target.dataset.action === 'quickApply'))){
+        // handled by buttons
+        return;
+      }
+      openDetails(job);
+    });
+    container.appendChild(card);
   });
-  container.appendChild(frag);
-  const controls = document.createElement('div');
-  controls.style.display='flex'; controls.style.justifyContent='center'; controls.style.marginTop='8px';
-  if(end < lastRenderedList.length){
-    const btn = document.createElement('button'); btn.textContent='Load more'; btn.className='btn-search';
-    btn.onclick = ()=> { currentPage++; renderPhoneList(lastRenderedList, false); };
-    controls.appendChild(btn);
-  } else {
-    const info = document.createElement('div'); info.style.color='var(--muted)'; info.style.fontSize='13px';
-    info.textContent = `${lastRenderedList.length} result${lastRenderedList.length===1?'':'s'}`;
-    controls.appendChild(info);
-  }
-  container.appendChild(controls);
+
+  // wire buttons inside list
+  container.querySelectorAll('button[data-action="details"]').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      const id = Number(btn.dataset.id);
+      const job = findJobById(id);
+      if(job) openDetails(job);
+    });
+  });
+  container.querySelectorAll('button[data-action="quickApply"]').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      const id = Number(btn.dataset.id);
+      const job = findJobById(id);
+      if(job) openApplyModal(job);
+    });
+  });
 }
 
-/* ---------- Filters & search ---------- */
-function getFilters(){
-  return {
-    q: (document.getElementById('globalSearch').value || '').trim().toLowerCase(),
-    type: document.getElementById('jobType').value || ''
-  };
+/* ---------- Helpers ---------- */
+function findJobById(id){
+  return [...sampleGigs.student, ...sampleGigs.family, ...sampleGigs.business].find(j=>j.id === id);
 }
-function applyGlobal(){
-  const f = getFilters();
-  let list = [...sampleGigs.student];
-  if(f.q) list = list.filter(j => (j.title+' '+j.description+' '+j.area+' '+j.category+' '+(j.skills||[]).join(' ')).toLowerCase().includes(f.q));
-  if(f.type) list = list.filter(j => j.category === f.type);
-  renderPhoneList(list, true);
-}
-const debouncedApplyGlobal = debounce(()=> applyGlobal(), 220);
 
-/* ---------- Details, Profile, Verified screens ---------- */
-function openDetails(jobOrId){
-  let job = jobOrId;
-  if(typeof jobOrId === 'number') job = [...sampleGigs.student,...sampleGigs.family,...sampleGigs.business].find(j=>j.id===jobOrId);
-  if(!job) return;
+/* ---------- Details & profile ---------- */
+function openDetails(job){
   currentJob = job;
   document.getElementById('detailTitle').textContent = job.title;
   document.getElementById('detailPay').textContent = `${job.pay} AED · ${job.duration}`;
@@ -376,15 +392,16 @@ function openDetails(jobOrId){
   document.getElementById('detailAvatar').textContent = poster.avatar || poster.name.slice(0,2).toUpperCase();
   document.getElementById('detailPoster').textContent = poster.name;
   document.getElementById('detailPosterMeta').textContent = (poster.verified ? 'Verified' : 'Unverified') + ' · ' + (poster.emirate || '');
-  // show details, hide others
-  document.getElementById('listScreen').style.display='none';
-  document.getElementById('detailsScreen').classList.add('active'); document.getElementById('detailsScreen').style.display='flex';
+  // show details
+  document.getElementById('listScreen').style.display = 'none';
+  document.getElementById('detailsScreen').classList.add('active');
+  document.getElementById('detailsScreen').style.display = 'flex';
   document.getElementById('detailsScreen').setAttribute('aria-hidden','false');
-  document.getElementById('profileScreen').classList.remove('active'); document.getElementById('profileScreen').style.display='none';
-  document.getElementById('verifyScreen').classList.remove('active'); document.getElementById('verifyScreen').style.display='none';
+  // update apply button state (disable if already applied)
+  updateApplyButtonState(job.id);
 }
 
-/* unified back handler */
+/* unified back */
 (function(){
   function unifiedBack(){
     ['detailsScreen','profileScreen','verifyScreen'].forEach(id=>{
@@ -396,35 +413,29 @@ function openDetails(jobOrId){
     currentJob = null;
   }
   window.unifiedBack = unifiedBack;
-  window.back = unifiedBack;
-  window.goBack = unifiedBack;
   document.addEventListener('click', (e)=>{
     if(e.target && e.target.classList && e.target.classList.contains('back-action')){ e.preventDefault(); unifiedBack(); }
   });
 })();
 
-/* open profile: uses currentJob to populate profile screen */
+/* profile */
 function openProfile(){
-  if(!currentJob){
-    toast('No job selected. Open a job first, then view profile.');
-    return;
-  }
+  if(!currentJob){ toast('Open a job first, then view the poster profile.'); return; }
   const poster = posters.find(p=>p.id===currentJob.posterId) || {name:'Unknown', avatar:'??', verified:false, about:''};
   document.getElementById('profileAvatar').textContent = poster.avatar || poster.name.slice(0,2).toUpperCase();
   document.getElementById('profileName').textContent = poster.name;
   document.getElementById('profileUni').textContent = poster.university ? `${poster.university} · ${poster.major}` : `${poster.type} · ${poster.emirate || ''}`;
   document.getElementById('profileAbout').textContent = poster.about || 'No bio available.';
   document.getElementById('profileRating').textContent = poster.verified ? '✔ Verified' : 'Unverified';
-  // show profile, hide others
+  // show profile
   document.getElementById('listScreen').style.display='none';
   document.getElementById('detailsScreen').classList.remove('active'); document.getElementById('detailsScreen').style.display='none';
   document.getElementById('profileScreen').classList.add('active'); document.getElementById('profileScreen').style.display='flex';
   document.getElementById('profileScreen').setAttribute('aria-hidden','false');
 }
 
-/* open verify info screen */
+/* verified info */
 function openVerify(){
-  // hide list and show verify screen
   document.getElementById('listScreen').style.display='none';
   document.getElementById('detailsScreen').classList.remove('active'); document.getElementById('detailsScreen').style.display='none';
   document.getElementById('profileScreen').classList.remove('active'); document.getElementById('profileScreen').style.display='none';
@@ -432,11 +443,87 @@ function openVerify(){
   document.getElementById('verifyScreen').setAttribute('aria-hidden','false');
 }
 
-/* ---------- Posting (simple client-side) ---------- */
-function postGigSubmit(){
-  const type = document.getElementById('postType').value;
+/* ---------- Apply modal flow ---------- */
+const modalBackdrop = document.getElementById('modalBackdrop');
+const modalJobSummary = document.getElementById('modalJobSummary');
+const applicationMessage = document.getElementById('applicationMessage');
+const modalSubmit = document.getElementById('modalSubmit');
+const modalCancel = document.getElementById('modalCancel');
+
+function openApplyModal(job){
+  currentJob = job;
+  modalJobSummary.textContent = `${job.title} — ${job.pay} AED · ${job.duration} · ${job.area}`;
+  applicationMessage.value = `Hi, I'm a student available for this task. I have experience with ${ (job.skills||[]).slice(0,2).join(', ') || 'relevant tasks' }.`;
+  modalBackdrop.style.display = 'flex';
+  modalBackdrop.setAttribute('aria-hidden','false');
+  applicationMessage.focus();
+  updateApplyButtonState(job.id);
+}
+
+function closeApplyModal(){
+  modalBackdrop.style.display = 'none';
+  modalBackdrop.setAttribute('aria-hidden','true');
+  applicationMessage.value = '';
+}
+
+/* prevent duplicate applications and handle submission */
+function updateApplyButtonState(jobId){
+  const applyBtn = document.getElementById('applyNowBtn');
+  if(applications[jobId]){
+    applyBtn.classList.add('btn-disabled');
+    applyBtn.textContent = 'Applied';
+  } else {
+    applyBtn.classList.remove('btn-disabled');
+    applyBtn.textContent = 'Apply';
+  }
+}
+
+/* submit application */
+modalSubmit.addEventListener('click', ()=>{
+  if(!currentJob){ toast('No job selected.'); closeApplyModal(); return; }
+  const jobId = currentJob.id;
+  const message = (applicationMessage.value || '').trim();
+  if(!message){
+    toast('Please write a short message before sending.');
+    applicationMessage.focus();
+    return;
+  }
+  // store application locally (client-side demo)
+  applications[jobId] = applications[jobId] || [];
+  applications[jobId].push({ message, at: new Date().toISOString() });
+  // update UI: disable apply button in details and list
+  updateApplyButtonState(jobId);
+  // close modal and confirm
+  closeApplyModal();
+  toast('Application sent — the poster will receive your message.');
+});
+
+/* modal cancel */
+modalCancel.addEventListener('click', ()=>{ closeApplyModal(); });
+
+/* clicking outside modal closes it */
+modalBackdrop.addEventListener('click', (e)=>{
+  if(e.target === modalBackdrop) closeApplyModal();
+});
+
+/* wire details apply button to open modal */
+document.getElementById('applyNowBtn').addEventListener('click', (e)=>{
+  if(!currentJob){ toast('Open a job first to apply.'); return; }
+  if(applications[currentJob.id]){ toast('You already applied to this gig.'); updateApplyButtonState(currentJob.id); return; }
+  openApplyModal(currentJob);
+});
+
+/* wire view profile */
+document.getElementById('viewProfileBtn').addEventListener('click', ()=>{ openProfile(); });
+
+/* wire verify CTA */
+document.getElementById('ctaVerify').addEventListener('click', openVerify);
+
+/* posting (client-side) */
+document.getElementById('postSubmitBtn').addEventListener('click', ()=>{
   const title = (document.getElementById('postTitle').value || '').trim();
   if(!title){ toast('Please add a task title before posting.'); document.getElementById('postTitle').focus(); return; }
+  const type = document.getElementById('postType').value;
   const duration = document.getElementById('postDuration').value;
   const budget = Number(document.getElementById('postBudget').value) || 0;
   const emirate = document.getElementById('postEmirate').value;
@@ -462,51 +549,21 @@ function postGigSubmit(){
   };
   sampleGigs.student.unshift(newJob);
   if(type === 'family') sampleGigs.family.unshift(newJob); else sampleGigs.business.unshift(newJob);
-  // re-render current tab
-  const active = document.querySelector('.phone-tab.active');
-  if(active && active.id === 'phone-tab-student') renderPhoneList(sampleGigs.student, true);
-  else if(active && active.id === 'phone-tab-family') renderPhoneList(sampleGigs.family, true);
-  else if(active && active.id === 'phone-tab-business') renderPhoneList(sampleGigs.business, true);
-  else renderPhoneList(sampleGigs.student, true);
+  renderPhoneList(sampleGigs.student);
   ['postTitle','postBudget','postArea','postTime','postDesc','postSkills'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
   toast('Your gig was posted and is now visible in the feed.');
-}
+});
 
-/* ---------- Wiring & init ---------- */
-document.getElementById('ctaStudent').addEventListener('click', ()=>{ document.getElementById('phone-tab-student').classList.add('active'); document.getElementById('phone-tab-family').classList.remove('active'); document.getElementById('phone-tab-business').classList.remove('active'); renderPhoneList(sampleGigs.student); });
-document.getElementById('ctaHelp').addEventListener('click', ()=>{ document.getElementById('phone-tab-family').classList.add('active'); document.getElementById('phone-tab-student').classList.remove('active'); document.getElementById('phone-tab-business').classList.remove('active'); renderPhoneList(sampleGigs.family); });
-document.getElementById('ctaVerify').addEventListener('click', openVerify);
-
-document.getElementById('phone-tab-student').addEventListener('click', ()=>{ document.querySelectorAll('.phone-tab').forEach(t=>t.classList.remove('active')); document.getElementById('phone-tab-student').classList.add('active'); renderPhoneList(sampleGigs.student); });
-document.getElementById('phone-tab-family').addEventListener('click', ()=>{ document.querySelectorAll('.phone-tab').forEach(t=>t.classList.remove('active')); document.getElementById('phone-tab-family').classList.add('active'); renderPhoneList(sampleGigs.family); });
-document.getElementById('phone-tab-business').addEventListener('click', ()=>{ document.querySelectorAll('.phone-tab').forEach(t=>t.classList.remove('active')); document.getElementById('phone-tab-business').classList.add('active'); renderPhoneList(sampleGigs.business); });
-
-document.getElementById('leftSearchBtn').addEventListener('click', ()=>{ applyGlobal(); });
-document.getElementById('phoneSearchBtn').addEventListener('click', ()=>{ const q=(document.getElementById('phoneSearch').value||'').trim().toLowerCase(); let list=[...sampleGigs.student]; if(q) list=list.filter(j=> (j.title+' '+j.description+' '+j.area+' '+j.category+' '+(j.skills||[]).join(' ')).toLowerCase().includes(q)); renderPhoneList(list, true); });
-
-document.getElementById('viewProfileBtn').addEventListener('click', ()=>{ openProfile(); });
-document.getElementById('postSubmitBtn').addEventListener('click', ()=>{ postGigSubmit(); });
-document.getElementById('postGigBtn').addEventListener('click', ()=>{ document.getElementById('postTitle').focus(); scrollToPost(); });
-document.getElementById('clearPostBtn').addEventListener('click', ()=>{ ['postTitle','postBudget','postArea','postTime','postDesc','postSkills'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; }); toast('Form cleared'); });
-
-document.getElementById('messageBtn').addEventListener('click', ()=>{ toast('Message modal would open (placeholder)'); });
-document.getElementById('reviewsBtn').addEventListener('click', ()=>{ toast('Reviews opened (placeholder)'); });
-
-document.getElementById('navPostBtn').addEventListener('click', ()=>{ scrollToPost(); });
-
-function scrollToPost(){
-  const el = document.getElementById('postCard');
-  if(!el) return;
-  el.scrollIntoView({behavior:'smooth', block:'center'});
-  el.style.transition = 'box-shadow .25s ease, transform .18s ease';
-  el.style.boxShadow = '0 30px 60px rgba(236,72,153,0.12)';
-  el.style.transform = 'translateY(-6px)';
-  setTimeout(()=>{ el.style.boxShadow=''; el.style.transform=''; }, 700);
-}
+/* search */
+document.getElementById('phoneSearchBtn').addEventListener('click', ()=>{
+  const q = (document.getElementById('phoneSearch').value || '').trim().toLowerCase();
+  let list = [...sampleGigs.student];
+  if(q) list = list.filter(j => (j.title+' '+j.description+' '+j.area+' '+j.category+' '+(j.skills||[]).join(' ')).toLowerCase().includes(q));
+  renderPhoneList(list);
+});
 
 /* keyboard search */
-document.getElementById('globalSearch').addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ e.preventDefault(); applyGlobal(); }});
-document.getElementById('phoneSearch').addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ e.preventDefault(); document.getElementById('phoneSearchBtn').click(); }});
+document.getElementById('phoneSearch').addEventListener('keydown', (e)=>{ if(e.key === 'Enter'){ e.preventDefault(); document.getElementById('phoneSearchBtn').click(); }});
 
 /* init */
 function init(){ renderPhoneList(sampleGigs.student); }
