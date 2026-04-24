@@ -3,33 +3,52 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>UniGigs — Apply Fix & Improved Apply Button</title>
+<title>UniGigs — Student Micro‑Gigs (UAE) — Profiles & CV</title>
 <style>
 :root{
   --bg:#020617; --muted:#9ca3af; --text:#f8fafc;
   --accent1:#f97316; --accent2:#ec4899; --accent3:#38bdf8; --accent4:#22c55e;
-  --glass: rgba(255,255,255,0.02); --radius-lg:14px; --shadow: 0 10px 30px rgba(2,6,23,0.55);
+  --glass: rgba(255,255,255,0.02); --radius-lg:18px; --shadow: 0 8px 20px rgba(2,6,23,0.55);
   --phone-width:380px; --phone-height:720px;
 }
 *{box-sizing:border-box;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial;}
 html,body{height:100%;margin:0;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;}
 .app{min-height:100vh;display:flex;flex-direction:column}
 
-/* layout */
-.nav{display:flex;align-items:center;justify-content:space-between;padding:14px 6vw;border-bottom:1px solid rgba(148,163,184,0.04);position:sticky;top:0;background:linear-gradient(90deg, rgba(6,10,20,0.85), rgba(6,10,20,0.5));z-index:40}
+/* NAV */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:14px 6vw;border-bottom:1px solid rgba(148,163,184,0.04);backdrop-filter:blur(6px);position:sticky;top:0;background:linear-gradient(90deg, rgba(6,10,20,0.85), rgba(6,10,20,0.5));z-index:40}
 .brand{display:flex;gap:12px;align-items:center}
 .logo{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--accent1),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:800;color:#071028}
+.title{font-weight:800}
+.subtitle{font-size:12px;color:var(--muted)}
+.nav-actions{display:flex;gap:10px;align-items:center}
+
+/* layout */
 .container{display:grid;grid-template-columns:1fr 1.05fr 0.95fr;gap:22px;padding:28px 6vw 48px;align-items:start}
 @media (max-width:1100px){.container{grid-template-columns:1fr;padding:18px;gap:14px}}
 
-/* left */
+/* LEFT */
 .left{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));border-radius:var(--radius-lg);padding:18px;border:1px solid rgba(148,163,184,0.04);box-shadow:var(--shadow)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
 .chip{padding:6px 10px;border-radius:999px;background:var(--glass);color:var(--muted);font-size:13px;border:1px solid rgba(148,163,184,0.04)}
 .h1{font-size:26px;font-weight:800;margin:6px 0}
+.h1 .accent{background:linear-gradient(90deg,var(--accent1),var(--accent2));-webkit-background-clip:text;color:transparent}
 .lead{color:var(--muted);line-height:1.5;max-width:520px;margin-bottom:12px}
+
+/* original colorful CTA buttons (restored) */
+.cta-row{display:flex;gap:12px;margin-top:12px;align-items:center}
+.cta-btn{
+  display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:14px;border:none;cursor:pointer;font-weight:700;
+  color:#071028;background:linear-gradient(90deg,var(--accent1),var(--accent2));box-shadow:0 10px 30px rgba(236,72,153,0.12);
+}
+.cta-btn.secondary{
+  background:linear-gradient(90deg,#60a5fa,#7c3aed); color:#fff; box-shadow:0 10px 30px rgba(99,102,241,0.12);
+}
+.cta-pill{padding:8px 12px;border-radius:999px;background:linear-gradient(90deg,#06b6d4,#14b8a6);color:#071028;font-weight:700;border:none;cursor:pointer;box-shadow:0 8px 22px rgba(6,182,212,0.08)}
 
 /* phone mock */
 .phone-shell{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));border-radius:20px;padding:18px;border:1px solid rgba(148,163,184,0.06);box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center}
+.phone-label{font-size:12px;color:var(--muted);margin-bottom:6px}
 .phone{width:var(--phone-width);height:var(--phone-height);border-radius:36px;background:linear-gradient(180deg,#020617,#000);border:1px solid rgba(148,163,184,0.06);box-shadow:0 20px 40px rgba(2,6,23,0.6);padding:12px;position:relative;overflow:hidden}
 .phone-inner{margin-top:36px;height:calc(100% - 44px);display:flex;flex-direction:column;gap:10px}
 .phone-tabs{display:flex;gap:6px;padding:0 6px}
@@ -38,42 +57,53 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--text);-webkit-fo
 .phone-list{flex:1;padding:8px 10px 12px;overflow:auto}
 
 /* gig card */
-.gig{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));border-radius:12px;padding:12px;border:1px solid rgba(148,163,184,0.06);margin-bottom:12px;font-size:14px;cursor:pointer;transition:transform .12s ease, box-shadow .12s ease}
+.gig{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));border-radius:12px;padding:12px;border:1px solid rgba(148,163,184,0.06);margin-bottom:12px;font-size:14px;cursor:pointer;transition:transform .12s ease, box-shadow .12s ease;will-change:transform}
 .gig:hover{transform:translateY(-6px);box-shadow:0 10px 24px rgba(2,6,23,0.35)}
+.gig .top{display:flex;justify-content:space-between;align-items:flex-start}
+.gig .title{font-weight:800}
+.gig .meta{display:flex;gap:8px;color:var(--muted);font-size:12px;margin-top:6px}
 
-/* details */
+/* details screen */
 .details{display:none;flex-direction:column;height:100%}
 .details.active{display:flex}
 .details .header{display:flex;justify-content:space-between;align-items:center;padding:6px}
 .details .body{padding:8px;color:var(--muted);font-size:13px;overflow:auto}
-.title-lg{font-size:16px;font-weight:800;color:#f9fafb;margin-bottom:6px}
+.details .title{font-size:16px;font-weight:800;color:#f9fafb;margin-bottom:6px}
+.details .row{display:flex;justify-content:space-between;margin:6px 0;color:var(--muted)}
+.details .section{margin-top:8px}
 
-/* buttons */
-.btn-primary{
-  background:linear-gradient(90deg,var(--accent3),var(--accent4));
-  color:#071028;border:none;padding:10px 14px;border-radius:12px;font-weight:800;cursor:pointer;box-shadow:0 10px 30px rgba(56,189,248,0.08);
-}
-.btn-ghost{background:transparent;border:1px solid rgba(148,163,184,0.06);color:var(--muted);padding:8px 12px;border-radius:10px;cursor:pointer}
-.btn-apply{
-  background:linear-gradient(90deg,#ffb86b,#ff6bcb);
-  color:#071028;border:none;padding:10px 14px;border-radius:999px;font-weight:900;cursor:pointer;box-shadow:0 12px 30px rgba(255,107,203,0.12);
+/* right column (post form) */
+.right{display:flex;flex-direction:column;gap:14px}
+.card{background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border-radius:14px;padding:14px;border:1px solid rgba(148,163,184,0.04);box-shadow:0 10px 25px rgba(2,6,23,0.5)}
+.card .title{font-weight:800}
+.form-row{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.input, .textarea{background:rgba(2,6,23,0.6);border-radius:10px;border:1px solid rgba(148,163,184,0.04);padding:10px;color:var(--text);font-size:13px}
+.textarea{min-height:80px;resize:vertical}
+.suggestion{padding:10px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(148,163,184,0.04);color:var(--muted);font-size:13px;margin-top:8px}
+
+/* Post button (colorful) */
+.post-button{
+  padding:10px 14px;border-radius:12px;border:none;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#071028;font-weight:900;cursor:pointer;
+  box-shadow:0 10px 30px rgba(236,72,153,0.12);
   transition:transform .12s ease, box-shadow .12s ease;
 }
-.btn-apply:active{transform:translateY(2px);box-shadow:0 8px 20px rgba(255,107,203,0.08)}
-.btn-disabled{opacity:0.5;cursor:not-allowed;pointer-events:none}
+.post-button:active{transform:translateY(2px);box-shadow:0 8px 20px rgba(236,72,153,0.08)}
 
-/* modal */
+/* avatar & badges */
+.avatar{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent1),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:800;color:#071028}
+.badge-verified{padding:6px 8px;border-radius:999px;background:linear-gradient(135deg,var(--accent4),#86efac);color:#071028;font-weight:700}
+
+/* modal & profile creation */
 .modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.6);display:none;align-items:center;justify-content:center;z-index:80}
-.modal{width:92%;max-width:520px;background:#071028;border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.04);box-shadow:0 30px 60px rgba(2,6,23,0.7);color:var(--text)}
+.modal{width:92%;max-width:720px;background:#071028;border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.04);box-shadow:0 30px 60px rgba(2,6,23,0.7);color:var(--text)}
 .modal h3{margin:0 0 8px 0}
-.input, textarea{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(148,163,184,0.06);background:rgba(255,255,255,0.02);color:var(--text);font-size:14px}
-textarea{min-height:110px;resize:vertical;margin-top:8px}
+.file-note{font-size:12px;color:var(--muted);margin-top:6px}
 
-/* toast */
-.toast{position:fixed;bottom:18px;right:18px;background:#0f172a;border-radius:999px;padding:10px 14px;border:1px solid rgba(34,197,94,0.12);color:#bbf7d0;font-size:13px;display:none;align-items:center;gap:8px;box-shadow:0 12px 30px rgba(15,23,42,0.8);z-index:90}
-
-/* small */
+/* small helpers */
 .kv{font-size:12px;color:var(--muted)}
+.toast{position:fixed;bottom:18px;right:18px;background:#0f172a;border-radius:999px;padding:10px 14px;border:1px solid rgba(34,197,94,0.12);color:#bbf7d0;font-size:13px;display:none;align-items:center;gap:8px;box-shadow:0 12px 30px rgba(15,23,42,0.8)}
+.toast-dot{width:8px;height:8px;border-radius:999px;background:var(--accent4)}
+@media (max-width:900px){ :root{--phone-width:320px;--phone-height:640px} .cta-btn{padding:8px 12px} }
 </style>
 </head>
 <body>
@@ -82,84 +112,145 @@ textarea{min-height:110px;resize:vertical;margin-top:8px}
     <div class="brand">
       <div class="logo">U</div>
       <div>
-        <div style="font-weight:800">UniGigs</div>
-        <div style="font-size:12px;color:var(--muted)">Student Micro‑Gigs · UAE</div>
+        <div class="title">UniGigs</div>
+        <div class="subtitle">Student Micro‑Gigs · UAE</div>
       </div>
     </div>
-    <div style="display:flex;gap:10px;align-items:center">
-      <div class="kv">All Emirates</div>
-      <button id="navPostBtn" class="btn-primary">Post a Gig</button>
+    <div class="nav-actions">
+      <div class="chip" id="nav-emirate">All Emirates</div>
+      <button id="openProfileCreator" class="cta-pill" title="Create or edit your student profile">Create / Edit Profile</button>
+      <button id="navPostBtn" class="post-button" title="Post a Gig">Post a Gig</button>
     </div>
   </header>
 
   <main class="container">
     <!-- LEFT -->
     <section class="left">
-      <div class="h1">Flexible work for <span style="background:linear-gradient(90deg,var(--accent1),var(--accent2));-webkit-background-clip:text;color:transparent">real students</span>.</div>
+      <div class="chips">
+        <div class="chip">For students, families & SMEs</div>
+        <div class="chip">Verified · 1–4 hour tasks</div>
+      </div>
+
+      <div class="h1">Flexible work for <span class="accent">real students</span>.</div>
       <div class="lead">UniGigs connects verified university students across all Emirates with families and small businesses for short-term, flexible tasks — from babysitting and tutoring to event help and errands.</div>
-      <div style="margin-top:12px;display:flex;gap:8px">
-        <button id="ctaStudent" class="chip">I'm a student</button>
-        <button id="ctaHelp" class="chip">I need help at home</button>
-        <button id="ctaVerify" class="chip">Verified info</button>
+
+      <!-- Restored original colorful CTAs -->
+      <div class="cta-row" style="margin-top:12px">
+        <button id="ctaStudent" class="cta-btn" title="Switch to Student tab">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2l3 6 6 .5-4.5 3.5L19 20l-7-4-7 4 1.5-7L3 8.5 9 8 12 2z" fill="#071028" /></svg>
+          I'm a student
+        </button>
+
+        <button id="ctaHelp" class="cta-btn secondary" title="Switch to Family tab">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2a4 4 0 014 4v2h2a2 2 0 012 2v6a2 2 0 01-2 2h-6v-6H8v6H2a2 2 0 01-2-2v-6a2 2 0 012-2h2V6a4 4 0 014-4h6z" fill="#fff" /></svg>
+          I need help at home
+        </button>
+
+        <button id="ctaVerify" class="cta-pill" title="Open verification info">Verified info</button>
+      </div>
+
+      <div style="margin-top:14px" class="card">
+        <div style="font-weight:800">Why students love UniGigs</div>
+        <ul style="color:var(--muted);margin-top:8px">
+          <li>Flexible 1–4 hour tasks that fit around classes.</li>
+          <li>Verified platform — safer than random social posts.</li>
+          <li>Build real-world skills and a rated profile for your CV.</li>
+          <li>Earn extra income without committing to full-time work.</li>
+        </ul>
+      </div>
+
+      <div style="margin-top:14px" class="search-card">
+        <div style="font-weight:800">Search jobs</div>
+        <div style="margin-top:8px;color:var(--muted);font-size:13px">Find specific roles and set the salary you want — press Search to update results.</div>
+
+        <div class="search-row" style="margin-top:12px">
+          <div class="search">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 21l-4.35-4.35" stroke="#9ca3af" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="11" cy="11" r="6" stroke="#9ca3af" stroke-width="1.6"/></svg>
+            <input id="globalSearch" placeholder="Search (e.g., tutoring, JLT, babysitting)" />
+          </div>
+
+          <select id="jobType" class="input" onchange="applyGlobal()">
+            <option value="">Any job type</option>
+            <option>Tutoring</option><option>Babysitting</option><option>Event</option><option>Errand</option><option>Pet care</option><option>Social media</option><option>Photography</option>
+          </select>
+
+          <button id="leftSearchBtn" class="post-button">Search</button>
+        </div>
       </div>
     </section>
 
-    <!-- CENTER -->
+    <!-- CENTER: phone mockup -->
     <section style="display:flex;justify-content:center;align-items:flex-start">
       <div class="phone-shell">
-        <div style="font-size:12px;color:var(--muted);margin-bottom:6px">UniGigs mobile experience</div>
+        <div class="phone-label">UniGigs mobile experience</div>
+
         <div class="phone" role="application" aria-label="UniGigs phone">
           <div class="phone-inner">
             <div class="phone-tabs">
-              <div id="phone-tab-student" class="phone-tab active">Student</div>
-              <div id="phone-tab-family" class="phone-tab">Family</div>
-              <div id="phone-tab-business" class="phone-tab">Business</div>
+              <div id="phone-tab-student" class="phone-tab active" onclick="selectPhoneTab('student')">Student</div>
+              <div id="phone-tab-family" class="phone-tab" onclick="selectPhoneTab('family')">Family</div>
+              <div id="phone-tab-business" class="phone-tab" onclick="selectPhoneTab('business')">Business</div>
             </div>
 
             <!-- LIST -->
             <div id="listScreen" class="phone-list">
-              <div style="padding:8px;display:flex;gap:8px;align-items:center">
-                <div style="flex:1;background:rgba(2,6,23,0.6);padding:10px;border-radius:12px;display:flex;align-items:center">
-                  <input id="phoneSearch" placeholder="Search jobs or areas" style="background:transparent;border:0;color:var(--text);outline:none;width:100%" />
+              <div style="padding:8px">
+                <div style="display:flex;gap:8px;align-items:center">
+                  <div style="flex:1;background:rgba(2,6,23,0.6);padding:10px;border-radius:12px;border:1px solid rgba(148,163,184,0.04);display:flex;gap:8px;align-items:center">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M21 21l-4.35-4.35" stroke="#9ca3af" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="11" cy="11" r="6" stroke="#9ca3af" stroke-width="1.6"/></svg>
+                    <input id="phoneSearch" placeholder="Search jobs or areas" style="background:transparent;border:0;color:var(--text);outline:none;width:100%" />
+                  </div>
+
+                  <!-- phone search button -->
+                  <button id="phoneSearchBtn" class="post-button" style="margin-left:8px">Search</button>
                 </div>
-                <button id="phoneSearchBtn" class="btn-primary">Search</button>
               </div>
+
               <div id="phoneList" style="padding:8px 10px 14px;overflow:auto"></div>
             </div>
 
             <!-- DETAILS -->
             <div id="detailsScreen" class="details" aria-hidden="true">
               <div class="header">
-                <div class="back-action" style="cursor:pointer;color:#e5e7eb;font-weight:600">← Back</div>
+                <div style="display:flex;gap:8px;align-items:center">
+                  <div class="back-action" style="cursor:pointer;color:#e5e7eb;font-weight:600">← Back</div>
+                </div>
                 <div class="chip" id="detailBadge">New</div>
               </div>
 
               <div class="body">
-                <div class="title-lg" id="detailTitle">Job title</div>
-                <div style="display:flex;justify-content:space-between;margin-bottom:8px">
-                  <div id="detailPay" class="kv">AED 0 · 1 hr</div>
-                  <div id="detailArea" class="kv">Dubai</div>
+                <div class="title" id="detailTitle">Job title</div>
+                <div class="row"><div class="kv" id="detailPay">AED 0 · 1 hr</div><div class="kv" id="detailArea">Dubai</div></div>
+
+                <div class="section">
+                  <div style="font-weight:700;color:#e5e7eb;margin-bottom:6px">Description</div>
+                  <div id="detailDesc" style="color:var(--muted)"></div>
                 </div>
 
-                <div style="font-weight:700;color:#e5e7eb;margin-bottom:6px">Description</div>
-                <div id="detailDesc" style="color:var(--muted);margin-bottom:10px"></div>
+                <div class="section">
+                  <div style="font-weight:700;color:#e5e7eb;margin-bottom:6px">Skills preferred</div>
+                  <div id="detailSkills" style="color:var(--muted)"></div>
+                </div>
 
-                <div style="font-weight:700;color:#e5e7eb;margin-bottom:6px">Skills preferred</div>
-                <div id="detailSkills" style="color:var(--muted);margin-bottom:12px"></div>
-
-                <div style="font-weight:700;color:#e5e7eb;margin-bottom:6px">Posted by</div>
-                <div style="display:flex;justify-content:space-between;align-items:center">
-                  <div style="display:flex;gap:8px;align-items:center">
-                    <div id="detailAvatar" class="avatar" style="width:44px;height:44px;border-radius:10px">EH</div>
+                <div class="section">
+                  <div style="font-weight:700;color:#e5e7eb;margin-bottom:6px">Posted by</div>
+                  <div style="display:flex;justify-content:space-between;align-items:center">
+                    <div style="display:flex;gap:8px;align-items:center">
+                      <div id="detailAvatar" class="avatar" style="width:44px;height:44px;border-radius:10px">EH</div>
+                      <div>
+                        <div id="detailPoster" style="font-weight:700;color:#f9fafb">Poster</div>
+                        <div id="detailPosterMeta" style="font-size:12px;color:var(--muted)">Verified · Dubai</div>
+                      </div>
+                    </div>
                     <div>
-                      <div id="detailPoster" style="font-weight:700;color:#f9fafb">Poster</div>
-                      <div id="detailPosterMeta" style="font-size:12px;color:var(--muted)">Verified · Dubai</div>
+                      <button id="viewProfileBtn" style="background:linear-gradient(135deg,var(--accent3),var(--accent4));border:none;padding:8px 10px;border-radius:10px;color:#071028;font-weight:700">View profile</button>
                     </div>
                   </div>
-                  <div style="display:flex;gap:8px">
-                    <button id="viewProfileBtn" class="btn-ghost">View profile</button>
-                    <button id="applyNowBtn" class="btn-apply">Apply</button>
-                  </div>
+                </div>
+
+                <div style="display:flex;gap:8px;margin-top:12px">
+                  <button id="applyNowBtn" style="flex:1;border-radius:999px;border:none;padding:12px;background:linear-gradient(135deg,#ffb86b,#ff6bcb);color:#071028;font-weight:800" onclick="openApplyFromDetails()">Apply now</button>
+                  <button id="saveJobBtn" style="flex:1;border-radius:999px;border:1px solid rgba(148,163,184,0.06);padding:12px;background:transparent;color:var(--muted)" onclick="saveJob()">Save</button>
                 </div>
               </div>
             </div>
@@ -177,16 +268,22 @@ textarea{min-height:110px;resize:vertical;margin-top:8px}
                     <div id="profileName" style="font-weight:800">Name</div>
                     <div id="profileUni" style="font-size:12px;color:var(--muted)">University · Major</div>
                     <div style="margin-top:8px;display:flex;gap:8px">
+                      <div id="profileVerified" class="badge-verified" style="display:none">✔ Verified</div>
                       <div id="profileRating" style="padding:6px 8px;border-radius:999px;background:rgba(255,255,255,0.03);color:var(--muted)">4.9 ★</div>
                     </div>
                   </div>
                 </div>
 
-                <div id="profileAbout" style="margin-top:10px;color:var(--muted)"></div>
+                <div style="margin-top:10px;color:var(--muted)" id="profileAbout">Profile bio will appear here.</div>
 
-                <div style="display:flex;gap:8px;margin-top:12px">
-                  <button id="messageBtn" class="btn-primary" style="flex:1">Message</button>
-                  <button id="reviewsBtn" class="btn-ghost" style="flex:1">Reviews</button>
+                <div style="margin-top:12px">
+                  <div style="font-weight:700;margin-bottom:6px">Skills</div>
+                  <div id="profileSkills" style="color:var(--muted)"></div>
+                </div>
+
+                <div style="margin-top:12px;display:flex;gap:8px">
+                  <button id="messageBtn" style="flex:1;border-radius:999px;border:none;padding:12px;background:linear-gradient(135deg,var(--accent3),var(--accent2));color:#071028;font-weight:700" onclick="toast('Message placeholder')">Message</button>
+                  <button id="downloadCvBtn" style="flex:1;border-radius:999px;border:1px solid rgba(148,163,184,0.06);padding:12px;background:transparent;color:var(--muted)" onclick="downloadCV()">Download CV</button>
                 </div>
               </div>
             </div>
@@ -213,8 +310,8 @@ textarea{min-height:110px;resize:vertical;margin-top:8px}
       </div>
     </section>
 
-    <!-- RIGHT (post form) -->
-    <aside style="display:flex;flex-direction:column;gap:14px">
+    <!-- RIGHT -->
+    <aside class="right">
       <div class="card" id="postCard">
         <div style="display:flex;justify-content:space-between;align-items:center">
           <div style="display:flex;gap:12px;align-items:center">
@@ -224,50 +321,147 @@ textarea{min-height:110px;resize:vertical;margin-top:8px}
               <div style="font-size:12px;color:var(--muted)">Families & businesses across all Emirates can post short tasks — students will apply.</div>
             </div>
           </div>
-          <div><button id="postGigBtn" class="btn-primary">Create post</button></div>
+          <div>
+            <button id="postGigBtn" class="post-button" title="Open post form">Create post</button>
+          </div>
         </div>
 
         <div style="margin-top:12px;padding-top:8px;border-top:1px dashed rgba(148,163,184,0.03)">
-          <div style="margin-top:8px"><label class="kv">I am a</label><select id="postType" class="input"><option value="family">Family / Parent</option><option value="business">Small business / Event planner</option></select></div>
-          <div style="margin-top:8px"><label class="kv">Task title</label><input id="postTitle" class="input" placeholder="e.g., Babysitting for 2 hours" /></div>
-          <div style="display:flex;gap:8px;margin-top:8px">
-            <div style="flex:1"><label class="kv">Duration</label><select id="postDuration" class="input"><option>1 hour</option><option>1.5 hours</option><option>2 hours</option><option>3 hours</option></select></div>
-            <div style="width:120px"><label class="kv">Budget (AED)</label><input id="postBudget" type="number" class="input" placeholder="e.g., 80" /></div>
+          <div class="form-row">
+            <label class="kv">I am a</label>
+            <select id="postType" class="input">
+              <option value="family">Family / Parent</option>
+              <option value="business">Small business / Event planner</option>
+            </select>
           </div>
-          <div style="margin-top:8px"><label class="kv">Emirate</label><select id="postEmirate" class="input"><option>Dubai</option><option>Abu Dhabi</option><option>Sharjah</option></select></div>
-          <div style="margin-top:8px"><label class="kv">Area / Neighborhood</label><input id="postArea" class="input" placeholder="e.g., JLT, Marina, Corniche" /></div>
-          <div style="margin-top:8px"><label class="kv">Time / Slot</label><input id="postTime" class="input" placeholder="e.g., Friday · 5–8 PM" /></div>
-          <div style="margin-top:8px"><label class="kv">Description</label><textarea id="postDesc" class="textarea" placeholder="Describe the task, expectations, and any special notes."></textarea></div>
-          <div style="margin-top:8px"><label class="kv">Preferred skills (optional)</label><input id="postSkills" class="input" placeholder="e.g., good with kids, fluent in English" /></div>
+
+          <div class="form-row">
+            <label class="kv">Task title</label>
+            <input id="postTitle" class="input" placeholder="e.g., Babysitting for 2 hours" />
+          </div>
+
+          <div style="display:flex;gap:8px">
+            <div style="flex:1" class="form-row">
+              <label class="kv">Duration</label>
+              <select id="postDuration" class="input">
+                <option>1 hour</option><option>1.5 hours</option><option>2 hours</option><option>2.5 hours</option><option>3 hours</option><option>4 hours</option><option>Flexible</option>
+              </select>
+            </div>
+            <div style="width:120px" class="form-row">
+              <label class="kv">Budget (AED)</label>
+              <input id="postBudget" type="number" class="input" placeholder="e.g., 80" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label class="kv">Emirate</label>
+            <select id="postEmirate" class="input">
+              <option>Dubai</option><option>Abu Dhabi</option><option>Sharjah</option><option>Ajman</option><option>Ras Al Khaimah</option><option>Fujairah</option><option>Umm Al Quwain</option><option>Al Ain</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label class="kv">Area / Neighborhood</label>
+            <input id="postArea" class="input" placeholder="e.g., JLT, Marina, Corniche" />
+          </div>
+
+          <div class="form-row">
+            <label class="kv">Time / Slot</label>
+            <input id="postTime" class="input" placeholder="e.g., Friday · 5–8 PM" />
+          </div>
+
+          <div class="form-row">
+            <label class="kv">Description</label>
+            <textarea id="postDesc" class="textarea" placeholder="Describe the task, expectations, and any special notes."></textarea>
+          </div>
+
+          <div class="form-row">
+            <label class="kv">Preferred skills (optional)</label>
+            <input id="postSkills" class="input" placeholder="e.g., good with kids, fluent in English" />
+          </div>
 
           <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:10px">
-            <button id="clearPostBtn" class="btn-ghost">Clear</button>
-            <button id="postSubmitBtn" class="btn-primary">Post gig</button>
+            <button id="clearPostBtn" class="chip">Clear</button>
+            <button id="previewPostBtn" class="chip">Post gig</button>
           </div>
         </div>
+      </div>
+
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div class="title">Saved searches</div>
+          <div class="kv">Quick access</div>
+        </div>
+        <div id="savedSearches" style="margin-top:10px"></div>
+
+        <div style="display:flex;gap:8px;margin-top:10px">
+          <input id="saveName" class="input" placeholder="Name this search" />
+          <button id="saveSearchBtn" class="chip">Save</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div class="title">Suggestions</div>
+          <div class="kv">Tips</div>
+        </div>
+        <div class="suggestion">Try "Tutoring" + min AED 80 near campus areas for fast matches.</div>
+        <div class="suggestion">Verified posters and clear descriptions get more applications.</div>
       </div>
     </aside>
   </main>
 </div>
 
+<!-- Profile creator modal -->
+<div id="profileModal" class="modal-backdrop" aria-hidden="true">
+  <div class="modal" role="dialog" aria-labelledby="profileModalTitle">
+    <h3 id="profileModalTitle">Create or edit your student profile</h3>
+    <div style="color:var(--muted);margin-bottom:10px">Profiles are stored locally in your browser for this prototype.</div>
+
+    <label class="kv">Full name</label>
+    <input id="profileFullName" class="input" placeholder="e.g., Sara Al Farsi" />
+
+    <label class="kv" style="margin-top:8px">University</label>
+    <input id="profileUniversity" class="input" placeholder="e.g., Canadian University Dubai" />
+
+    <label class="kv" style="margin-top:8px">Major / Program</label>
+    <input id="profileMajor" class="input" placeholder="e.g., Cyber Security" />
+
+    <label class="kv" style="margin-top:8px">Short bio</label>
+    <textarea id="profileBio" class="textarea" placeholder="A short intro about you"></textarea>
+
+    <label class="kv" style="margin-top:8px">Skills (comma separated)</label>
+    <input id="profileSkillsInput" class="input" placeholder="e.g., Tutoring, Childcare, Photography" />
+
+    <label class="kv" style="margin-top:8px">Upload CV (PDF preferred)</label>
+    <input id="profileCvFile" type="file" accept=".pdf,.doc,.docx" class="input" />
+    <div class="file-note" id="cvFileNote">No CV uploaded.</div>
+
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
+      <button id="profileCancel" class="chip">Cancel</button>
+      <button id="profileSave" class="post-button">Save profile</button>
+    </div>
+  </div>
+</div>
+
 <!-- Application modal -->
-<div id="modalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+<div id="modalBackdrop" class="modal-backdrop" aria-hidden="true">
   <div class="modal" role="document" aria-labelledby="modalTitle">
     <h3 id="modalTitle">Apply for this gig</h3>
     <div style="color:var(--muted);margin-bottom:10px" id="modalJobSummary">Job summary</div>
     <label class="kv">Short message to the poster</label>
     <textarea id="applicationMessage" placeholder="Introduce yourself briefly and say why you're a good fit."></textarea>
     <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
-      <button id="modalCancel" class="btn-ghost">Cancel</button>
-      <button id="modalSubmit" class="btn-apply">Send application</button>
+      <button id="modalCancel" class="chip">Cancel</button>
+      <button id="modalSubmit" class="post-button">Send application</button>
     </div>
   </div>
 </div>
 
-<div class="toast" id="toast">Action completed</div>
+<div class="toast" id="toast"><div class="toast-dot"></div><div id="toastText">Action completed</div></div>
 
 <script>
-/* ---------- Data (expanded sample gigs) ---------- */
+/* ---------- Data ---------- */
 const posters = [
   { id:'eleanora', name:'Eleanora Haddad', type:'Student', emirate:'Dubai', university:'Canadian University Dubai', major:'Cyber Security', verified:true, avatar:'EH', about:"Hi — I’m Eleanora, a Cyber Security student. I tutor and help with events." },
   { id:'leila', name:'Leila Nasser', type:'Family', emirate:'Dubai', verified:true, avatar:'LN', about:"Busy parent in Dubai. Prefers verified students for childcare and tutoring." },
@@ -307,19 +501,47 @@ const sampleGigs = {
 
 /* ---------- State ---------- */
 let currentJob = null;
-let applications = {}; // store applications by job id to prevent duplicates
+let applications = {}; // jobId -> array of applications
+let userProfile = loadProfile(); // load from localStorage if exists
 
 /* ---------- Utilities ---------- */
 function toast(msg){
   const t = document.getElementById('toast');
-  t.textContent = msg;
+  const txt = document.getElementById('toastText');
+  txt.textContent = msg;
   t.style.display = 'flex';
   clearTimeout(t._hide);
-  t._hide = setTimeout(()=> t.style.display = 'none', 2200);
+  t._hide = setTimeout(()=> t.style.display = 'none', 2400);
 }
 
-/* ---------- Render list with pagination ---------- */
-function renderPhoneList(list = sampleGigs.student, reset=true){
+/* ---------- Profile storage helpers ---------- */
+function saveProfileToStorage(profile){
+  try{
+    localStorage.setItem('ug_profile', JSON.stringify(profile));
+  }catch(e){
+    console.warn('Could not save profile', e);
+  }
+}
+function loadProfile(){
+  try{
+    const raw = localStorage.getItem('ug_profile');
+    if(!raw) return null;
+    return JSON.parse(raw);
+  }catch(e){
+    return null;
+  }
+}
+function clearProfileStorage(){
+  localStorage.removeItem('ug_profile');
+  userProfile = null;
+}
+
+/* ---------- Render saved searches (simple) ---------- */
+let savedSearches = JSON.parse(localStorage.getItem('ug_saved_searches') || '[]');
+function renderSaved(){ const el=document.getElementById('savedSearches'); el.innerHTML=''; if(savedSearches.length===0){ el.innerHTML='<div style="color:var(--muted);font-size:13px">No saved searches yet.</div>'; return; } savedSearches.forEach((s,i)=>{ const d=document.createElement('div'); d.className='suggestion'; d.style.display='flex'; d.style.justifyContent='space-between'; d.style.alignItems='center'; d.style.padding='8px 0'; d.innerHTML=`<div style="display:flex;gap:10px;align-items:center"><div style="width:36px;height:36px;border-radius:8px;background:linear-gradient(90deg,#7dd3fc,#60a5fa);display:flex;align-items:center;justify-content:center;color:#071028;font-weight:800">${s.name.slice(0,2).toUpperCase()}</div><div><div style="font-weight:700">${s.name}</div><div style="font-size:12px;color:var(--muted)">${s.q || ''} ${s.em? '· '+s.em : ''} ${s.min? '· min '+s.min+' AED' : ''}</div></div></div><div style="display:flex;gap:8px"><button class="chip" onclick="applySaved(${i})">Apply</button><button class="chip" onclick="deleteSaved(${i})">Delete</button></div>`; el.appendChild(d); }); }
+
+/* ---------- List rendering ---------- */
+function renderPhoneList(list = sampleGigs.student){
   const container = document.getElementById('phoneList');
   container.innerHTML = '';
   list.forEach(job=>{
@@ -327,10 +549,10 @@ function renderPhoneList(list = sampleGigs.student, reset=true){
     const card = document.createElement('div');
     card.className = 'gig';
     card.innerHTML = `
-      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+      <div class="top">
         <div>
-          <div style="font-weight:800">${job.title}</div>
-          <div style="color:var(--muted);font-size:12px;margin-top:6px">${poster.name} · ${job.emirate} · ${job.category}</div>
+          <div class="title">${job.title}</div>
+          <div class="meta">${poster.name} · ${job.emirate} · <span style="margin-left:6px">${job.category}</span></div>
         </div>
         <div style="text-align:right">
           <div style="font-weight:800">${job.pay} AED</div>
@@ -340,23 +562,20 @@ function renderPhoneList(list = sampleGigs.student, reset=true){
       <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px">
         <div style="color:var(--muted);font-size:12px">${job.time} · ${job.area}</div>
         <div style="display:flex;gap:8px">
-          <button class="btn-ghost" data-id="${job.id}" data-action="details">Details</button>
-          <button class="btn-apply" data-id="${job.id}" data-action="quickApply">Apply</button>
+          <button class="chip" data-id="${job.id}" data-action="details">Details</button>
+          <button class="post-button" data-id="${job.id}" data-action="apply">Apply</button>
         </div>
       </div>
     `;
-    // click on card opens details
+    // card click opens details
     card.addEventListener('click', (e)=>{
-      if(e.target && (e.target.dataset && (e.target.dataset.action === 'details' || e.target.dataset.action === 'quickApply'))){
-        // handled by buttons
-        return;
-      }
+      if(e.target && e.target.dataset && (e.target.dataset.action === 'details' || e.target.dataset.action === 'apply')) return;
       openDetails(job);
     });
     container.appendChild(card);
   });
 
-  // wire buttons inside list
+  // wire buttons
   container.querySelectorAll('button[data-action="details"]').forEach(btn=>{
     btn.addEventListener('click', (e)=>{
       e.stopPropagation();
@@ -365,7 +584,7 @@ function renderPhoneList(list = sampleGigs.student, reset=true){
       if(job) openDetails(job);
     });
   });
-  container.querySelectorAll('button[data-action="quickApply"]').forEach(btn=>{
+  container.querySelectorAll('button[data-action="apply"]').forEach(btn=>{
     btn.addEventListener('click', (e)=>{
       e.stopPropagation();
       const id = Number(btn.dataset.id);
@@ -393,15 +612,13 @@ function openDetails(job){
   document.getElementById('detailPoster').textContent = poster.name;
   document.getElementById('detailPosterMeta').textContent = (poster.verified ? 'Verified' : 'Unverified') + ' · ' + (poster.emirate || '');
   // show details
-  document.getElementById('listScreen').style.display = 'none';
+  document.getElementById('listScreen').style.display='none';
   document.getElementById('detailsScreen').classList.add('active');
-  document.getElementById('detailsScreen').style.display = 'flex';
-  document.getElementById('detailsScreen').setAttribute('aria-hidden','false');
-  // update apply button state (disable if already applied)
+  document.getElementById('detailsScreen').style.display='flex';
   updateApplyButtonState(job.id);
 }
 
-/* unified back */
+/* unified back handler */
 (function(){
   function unifiedBack(){
     ['detailsScreen','profileScreen','verifyScreen'].forEach(id=>{
@@ -418,7 +635,7 @@ function openDetails(job){
   });
 })();
 
-/* profile */
+/* open profile screen (view poster) */
 function openProfile(){
   if(!currentJob){ toast('Open a job first, then view the poster profile.'); return; }
   const poster = posters.find(p=>p.id===currentJob.posterId) || {name:'Unknown', avatar:'??', verified:false, about:''};
@@ -426,7 +643,8 @@ function openProfile(){
   document.getElementById('profileName').textContent = poster.name;
   document.getElementById('profileUni').textContent = poster.university ? `${poster.university} · ${poster.major}` : `${poster.type} · ${poster.emirate || ''}`;
   document.getElementById('profileAbout').textContent = poster.about || 'No bio available.';
-  document.getElementById('profileRating').textContent = poster.verified ? '✔ Verified' : 'Unverified';
+  document.getElementById('profileSkills').textContent = (poster.skills||[]).join(', ') || 'No skills listed.';
+  document.getElementById('profileVerified').style.display = poster.verified ? 'inline-block' : 'none';
   // show profile
   document.getElementById('listScreen').style.display='none';
   document.getElementById('detailsScreen').classList.remove('active'); document.getElementById('detailsScreen').style.display='none';
@@ -434,7 +652,7 @@ function openProfile(){
   document.getElementById('profileScreen').setAttribute('aria-hidden','false');
 }
 
-/* verified info */
+/* open verify info */
 function openVerify(){
   document.getElementById('listScreen').style.display='none';
   document.getElementById('detailsScreen').classList.remove('active'); document.getElementById('detailsScreen').style.display='none';
@@ -443,7 +661,7 @@ function openVerify(){
   document.getElementById('verifyScreen').setAttribute('aria-hidden','false');
 }
 
-/* ---------- Apply modal flow ---------- */
+/* ---------- Apply modal flow (uses user profile) ---------- */
 const modalBackdrop = document.getElementById('modalBackdrop');
 const modalJobSummary = document.getElementById('modalJobSummary');
 const applicationMessage = document.getElementById('applicationMessage');
@@ -453,7 +671,12 @@ const modalCancel = document.getElementById('modalCancel');
 function openApplyModal(job){
   currentJob = job;
   modalJobSummary.textContent = `${job.title} — ${job.pay} AED · ${job.duration} · ${job.area}`;
-  applicationMessage.value = `Hi, I'm a student available for this task. I have experience with ${ (job.skills||[]).slice(0,2).join(', ') || 'relevant tasks' }.`;
+  // prefill message with profile if available
+  if(userProfile){
+    applicationMessage.value = `Hi, I'm ${userProfile.fullName || ''}. I'm a ${userProfile.major || ''} student at ${userProfile.university || ''}. ${userProfile.skills ? 'Skills: '+userProfile.skills.join(', ')+'.' : ''} I'm available for this task.`;
+  } else {
+    applicationMessage.value = `Hi — I'm interested in this gig. I'm a student and available at the requested time.`;
+  }
   modalBackdrop.style.display = 'flex';
   modalBackdrop.setAttribute('aria-hidden','false');
   applicationMessage.focus();
@@ -469,12 +692,14 @@ function closeApplyModal(){
 /* prevent duplicate applications and handle submission */
 function updateApplyButtonState(jobId){
   const applyBtn = document.getElementById('applyNowBtn');
-  if(applications[jobId]){
-    applyBtn.classList.add('btn-disabled');
+  if(applications[jobId] && applications[jobId].length > 0){
+    applyBtn.classList.add('chip');
     applyBtn.textContent = 'Applied';
+    applyBtn.disabled = true;
   } else {
-    applyBtn.classList.remove('btn-disabled');
-    applyBtn.textContent = 'Apply';
+    applyBtn.classList.remove('chip');
+    applyBtn.textContent = 'Apply now';
+    applyBtn.disabled = false;
   }
 }
 
@@ -490,12 +715,11 @@ modalSubmit.addEventListener('click', ()=>{
   }
   // store application locally (client-side demo)
   applications[jobId] = applications[jobId] || [];
-  applications[jobId].push({ message, at: new Date().toISOString() });
+  applications[jobId].push({ message, at: new Date().toISOString(), profile: userProfile ? { name: userProfile.fullName, university: userProfile.university } : null });
   // update UI: disable apply button in details and list
   updateApplyButtonState(jobId);
-  // close modal and confirm
   closeApplyModal();
-  toast('Application sent — the poster will receive your message.');
+  toast('Application sent — the poster will receive your message (demo).');
 });
 
 /* modal cancel */
@@ -507,23 +731,111 @@ modalBackdrop.addEventListener('click', (e)=>{
 });
 
 /* wire details apply button to open modal */
-document.getElementById('applyNowBtn').addEventListener('click', (e)=>{
+function openApplyFromDetails(){
   if(!currentJob){ toast('Open a job first to apply.'); return; }
-  if(applications[currentJob.id]){ toast('You already applied to this gig.'); updateApplyButtonState(currentJob.id); return; }
+  if(applications[currentJob.id] && applications[currentJob.id].length > 0){ toast('You already applied to this gig.'); updateApplyButtonState(currentJob.id); return; }
+  // require profile for applying (recommended)
+  if(!userProfile){
+    toast('Please create your student profile (top-right) before applying.');
+    openProfileCreator();
+    return;
+  }
   openApplyModal(currentJob);
+}
+
+/* ---------- Profile creator modal logic ---------- */
+const profileModal = document.getElementById('profileModal');
+const profileFullName = document.getElementById('profileFullName');
+const profileUniversity = document.getElementById('profileUniversity');
+const profileMajor = document.getElementById('profileMajor');
+const profileBio = document.getElementById('profileBio');
+const profileSkillsInput = document.getElementById('profileSkillsInput');
+const profileCvFile = document.getElementById('profileCvFile');
+const cvFileNote = document.getElementById('cvFileNote');
+const profileSave = document.getElementById('profileSave');
+const profileCancel = document.getElementById('profileCancel');
+
+function openProfileCreator(){
+  // populate fields if profile exists
+  if(userProfile){
+    profileFullName.value = userProfile.fullName || '';
+    profileUniversity.value = userProfile.university || '';
+    profileMajor.value = userProfile.major || '';
+    profileBio.value = userProfile.bio || '';
+    profileSkillsInput.value = (userProfile.skills || []).join(', ');
+    cvFileNote.textContent = userProfile.cvName ? `Uploaded: ${userProfile.cvName}` : 'No CV uploaded.';
+  } else {
+    profileFullName.value = '';
+    profileUniversity.value = '';
+    profileMajor.value = '';
+    profileBio.value = '';
+    profileSkillsInput.value = '';
+    cvFileNote.textContent = 'No CV uploaded.';
+  }
+  profileModal.style.display = 'flex';
+  profileModal.setAttribute('aria-hidden','false');
+}
+
+function closeProfileCreator(){
+  profileModal.style.display = 'none';
+  profileModal.setAttribute('aria-hidden','true');
+}
+
+/* handle CV upload: read file as base64 and store name + data */
+profileCvFile.addEventListener('change', (e)=>{
+  const f = e.target.files && e.target.files[0];
+  if(!f){ cvFileNote.textContent = 'No CV uploaded.'; return; }
+  const reader = new FileReader();
+  reader.onload = function(ev){
+    const base64 = ev.target.result;
+    // store temporarily in the form; will be saved on Save
+    profileModal._cv = { name: f.name, data: base64, type: f.type };
+    cvFileNote.textContent = `Ready to save: ${f.name}`;
+  };
+  reader.readAsDataURL(f);
 });
 
-/* wire view profile */
-document.getElementById('viewProfileBtn').addEventListener('click', ()=>{ openProfile(); });
+/* Save profile */
+profileSave.addEventListener('click', ()=>{
+  const fullName = (profileFullName.value || '').trim();
+  if(!fullName){ toast('Please enter your full name.'); profileFullName.focus(); return; }
+  const university = (profileUniversity.value || '').trim();
+  const major = (profileMajor.value || '').trim();
+  const bio = (profileBio.value || '').trim();
+  const skills = (profileSkillsInput.value || '').split(',').map(s=>s.trim()).filter(Boolean);
+  const cv = profileModal._cv || (userProfile && userProfile.cv) ? (profileModal._cv || userProfile.cv) : null;
+  const cvName = profileModal._cv ? profileModal._cv.name : (userProfile && userProfile.cvName ? userProfile.cvName : null);
 
-/* wire verify CTA */
-document.getElementById('ctaVerify').addEventListener('click', openVerify);
+  userProfile = {
+    fullName, university, major, bio, skills,
+    cv: cv ? cv.data || null : null,
+    cvName: cvName || null,
+    createdAt: userProfile ? userProfile.createdAt : new Date().toISOString()
+  };
+  saveProfileToStorage(userProfile);
+  closeProfileCreator();
+  toast('Profile saved locally.');
+});
 
-/* posting (client-side) */
-document.getElementById('postSubmitBtn').addEventListener('click', ()=>{
+/* Cancel profile creation */
+profileCancel.addEventListener('click', ()=>{ closeProfileCreator(); });
+
+/* Download CV from profile (if exists) */
+function downloadCV(){
+  if(!userProfile || !userProfile.cv){ toast('No CV uploaded in your profile.'); return; }
+  const link = document.createElement('a');
+  link.href = userProfile.cv;
+  link.download = userProfile.cvName || 'cv';
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+}
+
+/* ---------- Posting (client-side) ---------- */
+document.getElementById('previewPostBtn').addEventListener('click', ()=>{
+  const type = document.getElementById('postType').value;
   const title = (document.getElementById('postTitle').value || '').trim();
   if(!title){ toast('Please add a task title before posting.'); document.getElementById('postTitle').focus(); return; }
-  const type = document.getElementById('postType').value;
   const duration = document.getElementById('postDuration').value;
   const budget = Number(document.getElementById('postBudget').value) || 0;
   const emirate = document.getElementById('postEmirate').value;
@@ -554,19 +866,81 @@ document.getElementById('postSubmitBtn').addEventListener('click', ()=>{
   toast('Your gig was posted and is now visible in the feed.');
 });
 
-/* search */
-document.getElementById('phoneSearchBtn').addEventListener('click', ()=>{
-  const q = (document.getElementById('phoneSearch').value || '').trim().toLowerCase();
+/* ---------- Search & tabs ---------- */
+function getFilters(){
+  return {
+    q: (document.getElementById('globalSearch').value || '').trim().toLowerCase(),
+    type: document.getElementById('jobType').value || ''
+  };
+}
+function applyGlobal(){
+  const f = getFilters();
   let list = [...sampleGigs.student];
-  if(q) list = list.filter(j => (j.title+' '+j.description+' '+j.area+' '+j.category+' '+(j.skills||[]).join(' ')).toLowerCase().includes(q));
+  if(f.q) list = list.filter(j => (j.title+' '+j.description+' '+j.area+' '+j.category+' '+(j.skills||[]).join(' ')).toLowerCase().includes(f.q));
+  if(f.type) list = list.filter(j => j.category === f.type);
+  renderPhoneList(list);
+}
+document.getElementById('leftSearchBtn').addEventListener('click', applyGlobal);
+document.getElementById('phoneSearchBtn').addEventListener('click', ()=>{
+  const q=(document.getElementById('phoneSearch').value||'').trim().toLowerCase();
+  let list=[...sampleGigs.student];
+  if(q) list=list.filter(j=> (j.title+' '+j.description+' '+j.area+' '+j.category+' '+(j.skills||[]).join(' ')).toLowerCase().includes(q));
   renderPhoneList(list);
 });
 
-/* keyboard search */
-document.getElementById('phoneSearch').addEventListener('keydown', (e)=>{ if(e.key === 'Enter'){ e.preventDefault(); document.getElementById('phoneSearchBtn').click(); }});
+/* tabs */
+function selectPhoneTab(mode){
+  document.getElementById('phone-tab-student').classList.remove('active');
+  document.getElementById('phone-tab-family').classList.remove('active');
+  document.getElementById('phone-tab-business').classList.remove('active');
+  if(mode==='student') document.getElementById('phone-tab-student').classList.add('active');
+  if(mode==='family') document.getElementById('phone-tab-family').classList.add('active');
+  if(mode==='business') document.getElementById('phone-tab-business').classList.add('active');
+  if(mode==='student') renderPhoneList(sampleGigs.student);
+  if(mode==='family') renderPhoneList(sampleGigs.family);
+  if(mode==='business') renderPhoneList(sampleGigs.business);
+  window.unifiedBack && window.unifiedBack();
+}
+document.getElementById('phone-tab-student').addEventListener('click', ()=> selectPhoneTab('student'));
+document.getElementById('phone-tab-family').addEventListener('click', ()=> selectPhoneTab('family'));
+document.getElementById('phone-tab-business').addEventListener('click', ()=> selectPhoneTab('business'));
+
+/* CTA buttons restored behavior */
+document.getElementById('ctaStudent').addEventListener('click', ()=> selectPhoneTab('student'));
+document.getElementById('ctaHelp').addEventListener('click', ()=> selectPhoneTab('family'));
+document.getElementById('ctaVerify').addEventListener('click', openVerify);
+
+/* view profile button in details */
+document.getElementById('viewProfileBtn').addEventListener('click', ()=> openProfile());
+
+/* open profile creator from nav */
+document.getElementById('openProfileCreator').addEventListener('click', openProfileCreator);
+
+/* download CV button in profile view */
+document.getElementById('downloadCvBtn').addEventListener('click', downloadCV);
+
+/* apply from details button */
+document.getElementById('applyNowBtn').addEventListener('click', openApplyFromDetails);
+
+/* saved searches functions */
+function saveSearch(){ const name = (document.getElementById('saveName').value||'').trim(); if(!name) return toast('Give the search a name'); const q = document.getElementById('globalSearch') ? document.getElementById('globalSearch').value : ''; const em = document.getElementById('emirate') ? document.getElementById('emirate').value : ''; const min = document.getElementById('minSalary') ? document.getElementById('minSalary').value : ''; savedSearches.push({name,q,em,min}); localStorage.setItem('ug_saved_searches', JSON.stringify(savedSearches)); renderSaved(); toast('Search saved'); document.getElementById('saveName').value=''; }
+function applySaved(i){ const s = savedSearches[i]; if(!s) return; if(document.getElementById('globalSearch')) document.getElementById('globalSearch').value = s.q || ''; if(document.getElementById('emirate')) document.getElementById('emirate').value = s.em || ''; if(document.getElementById('minSalary')) document.getElementById('minSalary').value = s.min || ''; applyGlobal(); toast('Saved search applied'); }
+function deleteSaved(i){ savedSearches.splice(i,1); localStorage.setItem('ug_saved_searches', JSON.stringify(savedSearches)); renderSaved(); toast('Saved search removed'); }
+document.getElementById('saveSearchBtn').addEventListener('click', saveSearch);
+
+/* quick helpers */
+function saveJob(){ if(!currentJob) return toast('Select a job first'); toast('Saved to your jobs (demo).'); }
 
 /* init */
-function init(){ renderPhoneList(sampleGigs.student); }
+function init(){
+  renderPhoneList(sampleGigs.student);
+  renderSaved();
+  // if user profile exists, show quick indicator
+  if(userProfile){
+    document.getElementById('openProfileCreator').textContent = 'Edit Profile';
+    document.getElementById('cvFileNote').textContent = userProfile.cvName ? `Uploaded: ${userProfile.cvName}` : 'No CV uploaded.';
+  }
+}
 init();
 </script>
 </body>
